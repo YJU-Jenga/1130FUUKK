@@ -21,15 +21,11 @@ def main():
 		if recog == 200:
 			print('KWS Dectected ...\n Start STT...')
 			text = dss.queryByVoice()
-			tts_result = tts.getText2VoiceStream(text, "result_mesg.wav")
 			if text == '':
 				print('질의한 내용이 없습니다.')
-			elif tts_result == 500:
-				print("TTS 동작 에러입니다.\n")
-				break
 			else:
 				MS.play_file("result_mesg.wav")
-			time.sleep(2)
+			#time.sleep(2)
 		else:
 			print('KWS Not Dectected ...')
 

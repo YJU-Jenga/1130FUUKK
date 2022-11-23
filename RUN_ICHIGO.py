@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import os
 import MicrophoneStream as MS
 import ex1_kwstest as kws
 import ex4_getText2VoiceStream as tts
@@ -22,7 +23,12 @@ def main():
 				print("TTS 동작 에러입니다.\n\n\n")
 				break
 			else:
-				MS.play_file("result_mesg.wav")			
+				MS.play_file("result_mesg.wav")
+				if os.path.isfile("result_mesg.wav"):
+					os.remove("result_mesg.wav")
+					return 'result_mesg.wav is deleted'
+				else:
+					print('result_mesg.wav is not exists')
 			time.sleep(2)
 		else:
 			print('KWS Not Dectected ...')

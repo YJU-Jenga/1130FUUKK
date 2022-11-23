@@ -13,7 +13,7 @@ import MicrophoneStream as MS
 import user_auth as UA
 import os
 ### STT
-
+import ex4_getText2VoiceStream as tts
 import audioop
 from ctypes import *
 
@@ -29,6 +29,9 @@ def py_error_handler(filename, line, function, err, fmt):
 c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
 asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
+
+channel = grpc.secure_channel('{}:{}'.format(HOST, PORT), UA.getCredentials())
+stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
 
 def generate_request():
 	with MS.MicrophoneStream(RATE, CHUNK) as stream:
@@ -46,8 +49,6 @@ def generate_request():
 
 def queryByVoice():
 	print ("\n\n\n질의할 내용을 말씀해 보세요.\n\n듣고 있는 중......\n")
-	channel = grpc.secure_channel('{}:{}'.format(HOST, PORT), UA.getCredentials())
-	stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
 	request = generate_request()
 	resultText = ''
 	response = stub.queryByVoice(request)
@@ -63,11 +64,20 @@ def queryByVoice():
 	else:
 		print("\n\nresultCd: %d\n" % (response.resultCd))
 		print("정상적인 음성인식이 되지 않았습니다.")
+	tts.getText2VoiceStream(resultText, "result_mesg.wav")
+	#MS.play_file("result_mesg.wav")
 	return resultText
 
 def main():
-	queryByVoice()
-	time.sleep(0.5)
+	result = queryByVoice()
+	tts.getText2VoiceStream(result, "result_mesg.wav")
+	MS.play_file("result_mesg.wav")
+	#print(tts_result)
 
+	'''
+	time.sleep(5)
+	tts_result = tts.getText2VoiceStream(result, "result_mesg.wav")
+	time.sleep(0.5)
+	'''
 if __name__ == '__main__':
 	main()

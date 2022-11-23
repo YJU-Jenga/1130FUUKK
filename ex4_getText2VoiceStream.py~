@@ -46,7 +46,7 @@ def getText2VoiceStream(inText,inFileName):
 
 def main():
 	output_file = "testtts.wav"
-	getText2VoiceStream("김다운씨 안녕하세요.", output_file)
+	getText2VoiceStream("안녕하세요. 반갑습니다.", output_file)
 	MS.play_file(output_file)
 	print( output_file + "이 생성되었으니 파일을 확인바랍니다. \n\n\n")
 	

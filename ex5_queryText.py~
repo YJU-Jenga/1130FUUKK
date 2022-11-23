@@ -44,7 +44,7 @@ def queryByText(text):
 def main():
 
 	# Dialog : queryByText
-	queryByText("조까")
+	queryByText("안녕")
 
 if __name__ == '__main__':
 	main()
