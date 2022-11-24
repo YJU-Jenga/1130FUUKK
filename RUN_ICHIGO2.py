@@ -51,13 +51,14 @@ def detect_wake_up_word(keyword = '지니야'):
 def generate_request():
     with MS.MicrophoneStream(RATE, CHUNK) as stream:
         audio_generator = stream.generator()
+
         for content in audio_generator:
             message = gigagenieRPC_pb2.reqVoice()
             message.audioContent = content
             yield message
 
 def get_grpc_stub():
-    channel = grpc.secure_channel('{}:{}'.format(HOST, PORT), UA.getCredentials())
+    channel = grpc.secure_channel('%s:$s'.format(HOST, PORT), UA.getCredentials())
     stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
     return stub
 
@@ -88,7 +89,7 @@ def get_text_from_voice():
 def get_voice_from_text(text, output_file_name = 'tts.wav'):
     stub = get_grpc_stub()
 
-    message = gigagenieRPC_pb2.reqText
+    message = gigagenieRPC_pb2.reqText()
     message.lang = 0
     message.text = text
 
@@ -117,7 +118,7 @@ def query_by_text(text):
     message = gigagenieRPC_pb2.reqQueryText()
     message.queryText = text
     message.userSession = "ICHIGO SESSION" # 단말기의 관리를 위해 넣어놓는 변수들
-    message.deviceId = "ICHIGO" # 현재는 쓰이지 않으나 추후 사용 예정
+    message.deviceId = "ICHIGO ID" # 현재는 쓰이지 않으나 추후 사용 예정
 
     response = stub.queryByText(message)
 
