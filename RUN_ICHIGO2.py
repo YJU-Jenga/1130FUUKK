@@ -58,7 +58,17 @@ def generate_request():
             yield message
 
 def get_grpc_stub():
-    channel = grpc.secure_channel('%s:$s'.format(HOST, PORT), UA.getCredentials())
+    channel = grpc.secure_channel('{}:{}'.format(HOST, PORT), UA.getCredentials())
+    stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
+    return stub
+    
+def get_grpc_stub():
+    channel = grpc.secure_channel('{}:{}'.format(HOST, PORT), UA.getCredentials())
+    stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
+    return stub
+    
+def get_grpc_stub():
+    channel = grpc.secure_channel('%s:%s' % (HOST, PORT), UA.getCredentials())
     stub = gigagenieRPC_pb2_grpc.GigagenieStub(channel)
     return stub
 
