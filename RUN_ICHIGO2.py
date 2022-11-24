@@ -25,7 +25,7 @@ c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
 asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
 
-def detect_wake_up_word(keyword = '기가지니'):
+def detect_wake_up_word(keyword = '지니야'):
     if not keyword in KWS_KEYWORDS:
         return False
 
@@ -72,15 +72,15 @@ def get_text_from_voice():
             print('상태 코드=%d | 인식 결과= %s'
                 % (response.resultCd, response.recognizedText))
             resultText = response.recognizedText
-            elif response.resultCd == 201: # final
-                print('상태 코드=%d | 인식 결과= %s'
-                    % (response.resultCd, response.recognizedText))
-                resultText = response.recognizedText
-                break
-            else:
-                print('상태 코드=%d | 인식 결과= %s'
-                    % (response.resultCd, response.recognizedText))
-                break
+        elif response.resultCd == 201: # final
+            print('상태 코드=%d | 인식 결과= %s'
+                % (response.resultCd, response.recognizedText))
+            resultText = response.recognizedText
+            break
+        else:
+            print('상태 코드=%d | 인식 결과= %s'
+                % (response.resultCd, response.recognizedText))
+            break
             
     print("\n\n 최종 인식 결과: %s \n\n" % (resultText))
     return resultText
@@ -116,8 +116,8 @@ def query_by_text(text):
     stub = get_grpc_stub()
     message = gigagenieRPC_pb2.reqQueryText()
     message.queryText = text
-    message.userSession = "1234" # 단말기의 관리를 위해 넣어놓는 변수들
-    message.deviceId = "yourdevice" # 현재는 쓰이지 않으나 추후 사용 예정
+    message.userSession = "ICHIGO SESSION" # 단말기의 관리를 위해 넣어놓는 변수들
+    message.deviceId = "ICHIGO" # 현재는 쓰이지 않으나 추후 사용 예정
 
     response = stub.queryByText(message)
 
