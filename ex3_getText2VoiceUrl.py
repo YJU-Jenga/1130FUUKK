@@ -36,7 +36,7 @@ def getText2VoiceUrl(inText):
 		print ("Fail: %d" % (response.resultCd)) 
 
 def main():
-	getText2VoiceUrl("Fuck You")
+	getText2VoiceUrl("안녕하세요. 반갑습니다.")
 
 if __name__ == '__main__':
 	main()
