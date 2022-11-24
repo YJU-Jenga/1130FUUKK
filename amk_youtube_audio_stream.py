@@ -18,7 +18,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 
-DEVELOPER_KEY = 'AIzaSyAJDSc6sFaQmvqbqOWuef-ksX19iZDCJz8'
+DEVELOPER_KEY = 'KEY'
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
 
